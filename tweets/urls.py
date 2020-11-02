@@ -1,10 +1,7 @@
 from django.urls import path, include  # url()
 from rest_framework.routers import DefaultRouter
 
-from tweets.views import (
-    tweet_action_view, tweet_detail_view, tweet_list_view,
-    tweet_create_view, tweet_delete_view, TweetViewSet
-)
+from tweets.views import TweetViewSet
 
 router = DefaultRouter()
 router.register('', TweetViewSet)
