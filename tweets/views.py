@@ -1,8 +1,8 @@
 from django.conf import settings
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import action
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action, permission_classes
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Tweet
 from .serializers import TweetActionSerializer, TweetCreateSerializer, TweetSerializer
@@ -14,6 +14,12 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 class TweetViewSet(viewsets.ModelViewSet):
     queryset = Tweet.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    # def get_permissions(self):
+    #     if self.action in ['retrieve', 'list']:
+    #         return [AllowAny()]
+    #     return self.permission_classes
 
     def get_serializer_class(self):
         if self.action == 'create':
